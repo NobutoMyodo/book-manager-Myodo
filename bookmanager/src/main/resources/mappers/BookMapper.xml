@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yi_college.bookmanager.repository.BookRepository">
+
+    <!-- 全ての書籍を取得 -->
+    <select id="findAll" resultType="com.yi_college.bookmanager.entity.BookEntity">
+        SELECT * FROM books
+    </select>
+
+    <!-- 書籍の新規登録 -->
+    <insert id="insert" parameterType="com.yi_college.bookmanager.entity.BookEntity">
+        INSERT INTO books (title, author, publisher, published_date, stock)
+        VALUES (#{title}, #{author}, #{publisher}, #{publishedDate}, #{stock})
+    </insert>
+
+    <!-- 書籍の更新 -->
+    <update id="update" parameterType="com.yi_college.bookmanager.entity.BookEntity">
+        UPDATE books
+        SET title = #{title},
+            author = #{author},
+            publisher = #{publisher},
+            published_date = #{publishedDate},
+            stock = #{stock}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 書籍の削除 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM books WHERE id = #{id}
+    </delete>
+
+</mapper>

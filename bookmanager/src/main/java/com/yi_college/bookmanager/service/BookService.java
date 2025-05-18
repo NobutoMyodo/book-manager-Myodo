@@ -50,18 +50,19 @@ public class BookService {
     public Book updateBook(int id, Book book) {
         BookEntity existing = bookRepository.findById(id);
         if (existing == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found");
+            return null;
         }
 
-        BookEntity entity = new BookEntity();
-        entity.setId(id);
-        entity.setTitle(book.getTitle());
-        entity.setAuthor(book.getAuthor());
-        entity.setPublisher(book.getPublisher());
-        entity.setPublishedDate(book.getPublishDate());
-        entity.setStock(book.getStock());
+        // 既存エンティティの値を更新する
+        existing.setTitle(book.getTitle());
+        existing.setAuthor(book.getAuthor());
+        existing.setPublisher(book.getPublisher());
+        existing.setPublishedDate(book.getPublishDate());
+        existing.setStock(book.getStock());
 
-        bookRepository.update(entity);
+        bookRepository.update(existing);
+
+        // Book DTOを返す場合は引数のbookのままでOK
         return book;
     }
 

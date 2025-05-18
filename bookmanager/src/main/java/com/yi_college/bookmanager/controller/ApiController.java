@@ -1,6 +1,8 @@
 package com.yi_college.bookmanager.controller;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +31,9 @@ public class ApiController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public Book createBook(@RequestBody Book book) {
-        return bookService.createBook(book);
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+        Book savedBook = bookService.createBook(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
 
     @PutMapping("/{id}")
@@ -39,7 +42,8 @@ public class ApiController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable int id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable int id) {
         bookService.deleteBook(id);
+        return ResponseEntity.noContent().build();
     }
 }
